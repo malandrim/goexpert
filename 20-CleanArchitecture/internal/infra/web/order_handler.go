@@ -8,5 +8,5 @@ import (
 type WebOrderHandler struct {
 	EventDispatcher  events.EventDispatcherInterface
 	OrderRepository  entity.OrderRepositoryInterface
-	OrderCreateEvent events.EventInterface
+	OrderCreateEvent events.Event
 }
