@@ -19,7 +19,7 @@ func (r *OrderRepository) Save(order *entity.Order) error {
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(order.id, order.price, order.tax, order.final_price)
+	_, err = stmt.Exec(order.ID, order.Price, order.Tax, order.FinalPrice)
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,9 @@
+go 1.20
+
+use (
+	./14-GRPC
+	./15-UPLOADS3
+	./16-CLI
+	./17-SQLC
+	./20-CleanArchitecture
+)

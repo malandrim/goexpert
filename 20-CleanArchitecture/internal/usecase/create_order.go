@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/malandrim/goexpert/20-CleanArchitecture/entity"
-	"github.com/malandrim/goexpert/20-CleanArchitecture/events"
+	"github.com/malandrim/goexpert/20-CleanArchitecture/internal/entity"
+	"github.com/malandrim/goexpert/20-CleanArchitecture/pkg/events"
 )
 
 type OrderInputDTO struct {

@@ -10,7 +10,7 @@ type Order struct {
 }
 
 func NewOrder(id string, price float64, tax float64) (*Order, error) {
-	order := Order{
+	order := &Order{
 		ID:    id,
 		Price: price,
 		Tax:   tax,
