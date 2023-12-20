@@ -54,7 +54,7 @@ func (c *CreateOrderUseCase) Execute(input OrderInputDTO) (OrderOutputDTO, error
 		FinalPrice: order.FinalPrice,
 	}
 
-	c.OrderCreated.SetPayLoad(dto)
+	c.OrderCreated.SetPayload(dto)
 	c.EventDispatcher.Dispatch(c.OrderCreated)
 
 	return dto, nil

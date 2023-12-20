@@ -8,8 +8,8 @@ import (
 type EventInterface interface {
 	GetName() string
 	GetDateTime() time.Time
-	GetPayLoad() interface{}
-	SetPayLoad(payload interface{})
+	GetPayload() interface{}
+	SetPayload(payload interface{})
 }
 
 type EventHandlerInterface interface {

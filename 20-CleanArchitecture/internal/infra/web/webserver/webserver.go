@@ -7,31 +7,31 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-type Webserver struct {
+type WebServer struct {
 	Router        chi.Router
 	Handlers      map[string]http.HandlerFunc
-	WebserverPort string
+	WebServerPort string
 }
 
-func NewWebServer(serverPort string) *Webserver {
-	return &Webserver{
+func NewWebServer(serverPort string) *WebServer {
+	return &WebServer{
 		Router:        chi.NewRouter(),
 		Handlers:      make(map[string]http.HandlerFunc),
-		WebserverPort: serverPort,
+		WebServerPort: serverPort,
 	}
 }
 
-// loop through the handlers to add them to the router
-// register middleware logger
-// start the server
-func (s *Webserver) AddHandler(path string, handler http.HandlerFunc) {
+func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
 	s.Handlers[path] = handler
 }
 
-func (s *Webserver) Start() {
+// loop through the handlers and add them to the router
+// register middeleware logger
+// start the server
+func (s *WebServer) Start() {
 	s.Router.Use(middleware.Logger)
 	for path, handler := range s.Handlers {
 		s.Router.Handle(path, handler)
 	}
-	http.ListenAndServe(s.WebserverPort, s.Router)
+	http.ListenAndServe(s.WebServerPort, s.Router)
 }
