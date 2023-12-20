@@ -12,7 +12,7 @@ type OrderService struct {
 	CreateOrderUseCase usecase.CreateOrderUseCase
 }
 
-func NweOrderService(createOrderUseCase usecase.CreateOrderUseCase) *OrderService {
+func NewOrderService(createOrderUseCase usecase.CreateOrderUseCase) *OrderService {
 	return &OrderService{
 		CreateOrderUseCase: createOrderUseCase,
 	}
