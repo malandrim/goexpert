@@ -7,20 +7,20 @@ import (
 	"net/http"
 
 	graphql_handler "github.com/99designs/gqlgen/graphql/handler"
+	"github.com/streadway/amqp"
 
 	"github.com/99designs/gqlgen/graphql/playground"
+
 	"github.com/malandrim/goexpert/20-CleanArchitecture/configs"
 	"github.com/malandrim/goexpert/20-CleanArchitecture/internal/event/handler"
-	"github.com/malandrim/goexpert/20-CleanArchitecture/internal/infra/graph"
 	"github.com/malandrim/goexpert/20-CleanArchitecture/internal/infra/grpc/pb"
 	"github.com/malandrim/goexpert/20-CleanArchitecture/internal/infra/grpc/service"
 	"github.com/malandrim/goexpert/20-CleanArchitecture/internal/infra/web/webserver"
+	"github.com/malandrim/goexpert/20-CleanArchitecture/pkg/events"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	"github.com/malandrim/goexpert/20-CleanArchitecture/pkg/events"
-
-	"github.com/streadway/amqp"
+	"github.com/malandrim/goexpert/20-CleanArchitecture/internal/infra/graph"
 
 	// mysql
 	_ "github.com/go-sql-driver/mysql"
@@ -38,11 +38,11 @@ func main() {
 	}
 	defer db.Close()
 
-	rabbitMAChannel := getRabbitMQChannel()
+	rabbitMQChannel := getRabbitMQChannel()
 
 	eventDispatcher := events.NewEventDispatcher()
 	eventDispatcher.Register("OrderCreated", &handler.OrderCreatedHandler{
-		RabbitMQChannel: rabbitMAChannel,
+		RabbitMQChannel: rabbitMQChannel,
 	})
 
 	createOrderUseCase := NewCreateOrderUseCase(db, eventDispatcher)
@@ -70,6 +70,7 @@ func main() {
 	}}))
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
+
 	fmt.Println("Starting GraphQL server on port", configs.GraphQLServerPort)
 	http.ListenAndServe(":"+configs.GraphQLServerPort, nil)
 
